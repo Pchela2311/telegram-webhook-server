@@ -1,4 +1,7 @@
-const express = require('express');
+const Anthropic = require('@anthropic-ai/sdk');
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
+});const express = require('express');
 const app = express();
 app.use(express.json());
 
@@ -15,7 +18,24 @@ app.post('/webhook', async (req, res) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         chat_id: chatId,
-        text: "Я получил: " + message.text
+        const response = await anthropic.messages.create({
+  model: "claude-3-5-sonnet-20241022",
+  max_tokens: 500,
+  messages: [
+    { role: "user", content: message.text }
+  ],
+});
+
+const aiText = response.content[0].text;
+
+await fetch(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    chat_id: chatId,
+    text: aiText,
+  }),
+});
       })
     });
   }
