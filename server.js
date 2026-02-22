@@ -1,3 +1,9 @@
+const express = require('express');
+const fetch = require('node-fetch');
+
+const app = express();
+app.use(express.json());
+
 app.post('/webhook', async (req, res) => {
   console.log('Update received:', req.body);
 
@@ -17,4 +23,13 @@ app.post('/webhook', async (req, res) => {
   }
 
   res.sendStatus(200);
+});
+
+app.get('/', (req, res) => {
+  res.send('Server is running');
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
 });
