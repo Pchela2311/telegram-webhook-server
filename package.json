@@ -1,17 +1,16 @@
 {
   "name": "telegram-webhook-server",
   "version": "1.0.0",
-  "private": true,
-  "description": "Telegram webhook server with Anthropic Claude",
-  "main": "src/server.js",
+  "description": "Telegram webhook server with Claude (Anthropic)",
+  "main": "server.js",
   "scripts": {
-    "start": "node src/server.js"
-  },
-  "dependencies": {
-    "@anthropic-ai/sdk": "^0.36.0",
-    "express": "^4.19.2"
+    "start": "node server.js"
   },
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.0",
+    "express": "^4.19.2"
   }
 }
